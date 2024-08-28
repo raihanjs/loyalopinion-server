@@ -30,7 +30,10 @@ async function run() {
     const users = database.collection("users");
 
     // Get all users
-    app.get("/users", async (req, res) => {});
+    app.get("/users", async (req, res) => {
+      const allUsers = await users.find().toArray();
+      res.send(allUsers);
+    });
 
     // Add new user
     app.post("/users", async (req, res) => {
