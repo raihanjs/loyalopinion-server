@@ -28,6 +28,7 @@ async function run() {
   try {
     const database = client.db("loyalopinion");
     const users = database.collection("users");
+    const surveys = database.collection("surveys");
 
     // Get all users
     app.get("/users", async (req, res) => {
@@ -48,6 +49,18 @@ async function run() {
       }
       //   If user not exist
       const result = await users.insertOne(user);
+      res.send(result);
+    });
+
+    // Get all surveys
+    app.get("/surveys", async (req, res) => {
+      const allSurveys = await surveys.find().toArray();
+      res.send(allSurveys);
+    });
+
+    app.post("/surveys", async (req, res) => {
+      const surveyUseer = req.body;
+      const result = await surveys.insertOne(surveyUseer);
       res.send(result);
     });
   } finally {
